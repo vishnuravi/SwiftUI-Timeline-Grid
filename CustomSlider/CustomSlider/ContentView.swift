@@ -72,6 +72,28 @@ struct StoryDaySlider: View {
         self.values[self.day] = severity
     }
     
+    func setPosition(position: String){
+        switch position {
+        case "severe":
+            self.position.height = -300
+            self.buttonColor = Color.red
+            self.updateSeverity(severity: "severe")
+        case "moderate":
+            self.position.height = -200
+            self.buttonColor = Color.orange
+            self.updateSeverity(severity: "moderate")
+        case "mild":
+            self.position.height = -100
+            self.buttonColor = Color.yellow
+            self.updateSeverity(severity: "mild")
+        default:
+            self.position.height = 0
+            self.buttonColor = Color.gray
+            self.updateSeverity(severity: "none")
+        }
+        print("day: \(self.day), value: \(self.values[self.day]!)")
+    }
+    
     var body: some View {
         ZStack(){
             Rectangle()
@@ -80,25 +102,25 @@ struct StoryDaySlider: View {
                 .offset(y: -150)
             Group(){
                 Button(action: {
-                    self.position.height = 0
+                    self.setPosition(position: "none")
                 }){
                     Circle().frame(width:10, height: 10)
                 }.offset(y: 0)
                 
                 Button(action: {
-                    self.position.height = -100
+                    self.setPosition(position: "mild")
                 }){
                     Circle().frame(width:10, height: 10)
                 }.offset(y: -100)
                 
                 Button(action: {
-                    self.position.height = -200
+                    self.setPosition(position: "moderate")
                 }){
                     Circle().frame(width:10, height: 10)
                 }.offset(y: -200)
                 
                 Button(action: {
-                    self.position.height = -300
+                    self.setPosition(position: "severe")
                 }){
                     Circle().frame(width:10, height: 10)
                 }.offset(y: -300)
@@ -119,24 +141,15 @@ struct StoryDaySlider: View {
                             let currentHeight = self.position.height + value.translation.height
                             
                             if(currentHeight < -50 && currentHeight >= -150){
-                                self.position.height = -100
-                                self.buttonColor = Color.yellow
-                                self.updateSeverity(severity: "mild")
+                                self.setPosition(position: "mild")
                             }else if(currentHeight < -150 && currentHeight >= -250){
-                                self.position.height = -200
-                                self.buttonColor = Color.orange
-                                self.updateSeverity(severity: "moderate")
+                                self.setPosition(position: "moderate")
                             }else if(currentHeight < -250 && currentHeight >= -350){
-                                self.position.height = -300
-                                self.buttonColor = Color.red
-                                self.updateSeverity(severity: "severe")
+                                self.setPosition(position: "severe")
                             }else{
-                                self.position.height = 0
-                                self.buttonColor = Color.gray
-                                self.updateSeverity(severity: "none")
+                                self.setPosition(position: "none")
                             }
                             
-                            print("day: \(self.day), value: \(self.values[self.day]!)")
                         })
             )
         }
