@@ -78,12 +78,31 @@ struct StoryDaySlider: View {
                 .fill(Color.gray)
                 .frame(width: 1, height: 300)
                 .offset(y: -150)
-                .gesture(
-                    TapGesture()
-                        .onEnded { _ in
-                            print("Tapped")
-                    }
-            )
+            Group(){
+                Button(action: {
+                    self.position.height = 0
+                }){
+                    Circle().frame(width:10, height: 10)
+                }.offset(y: 0)
+                
+                Button(action: {
+                    self.position.height = -100
+                }){
+                    Circle().frame(width:10, height: 10)
+                }.offset(y: -100)
+                
+                Button(action: {
+                    self.position.height = -200
+                }){
+                    Circle().frame(width:10, height: 10)
+                }.offset(y: -200)
+                
+                Button(action: {
+                    self.position.height = -300
+                }){
+                    Circle().frame(width:10, height: 10)
+                }.offset(y: -300)
+            }
             Text("\(self.day)")
                 .frame(width: 50, height: 50)
                 .foregroundColor(Color.white)
