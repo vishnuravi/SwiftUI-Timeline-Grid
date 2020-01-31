@@ -22,7 +22,10 @@ struct StorySliderGrid: View {
         ZStack(){
             Group(){
                 HStack(){
-                    Text("None").font(.system(size: 12)).padding(.leading, 5)
+                    Text("NONE")
+                        .font(.custom("AvenirNext-Regular", size: 12))
+                        .foregroundColor((Color(red: 33/255, green: 61/255, blue: 153/255)))
+                        .padding(.leading, 5)
                     Spacer()
                     Rectangle()
                         .fill(Color.gray)
@@ -30,7 +33,10 @@ struct StorySliderGrid: View {
                 }
                 
                 HStack(){
-                    Text("Mild").font(.system(size: 12)).padding(.leading, 5)
+                    Text("MILD")
+                        .font(.custom("AvenirNext-Regular", size: 12))
+                        .foregroundColor((Color(red: 33/255, green: 61/255, blue: 153/255)))
+                        .padding(.leading, 5)
                     Spacer()
                     Rectangle()
                         .fill(Color.gray)
@@ -38,7 +44,10 @@ struct StorySliderGrid: View {
                 }.offset(y: -100)
                 
                 HStack(){
-                    Text("Moderate").font(.system(size: 12)).padding(.leading, 5)
+                    Text("MODERATE")
+                        .font(.custom("AvenirNext-Regular", size: 12))
+                        .foregroundColor((Color(red: 33/255, green: 61/255, blue: 153/255)))
+                        .padding(.leading, 5)
                     Spacer()
                     Rectangle()
                         .fill(Color.gray)
@@ -46,7 +55,10 @@ struct StorySliderGrid: View {
                 }.offset(y: -200)
                 
                 HStack(){
-                    Text("Severe").font(.system(size: 12)).padding(.leading, 5)
+                    Text("SEVERE")
+                        .font(.custom("AvenirNext-Regular", size: 12))
+                        .foregroundColor((Color(red: 33/255, green: 61/255, blue: 153/255)))
+                        .padding(.leading, 5)
                     Spacer()
                     Rectangle()
                         .fill(Color.gray)
@@ -106,46 +118,55 @@ struct StoryDaySlider: View {
         print("day: \(self.day), value: \(self.values[self.day]!)")
     }
     
+    func ordinalNumber(num: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        return formatter.string(from: NSNumber(value: num))!
+    }
+    
     var body: some View {
         ZStack(){
             Group(){
             Rectangle()
-                .fill(Color.gray)
+                .fill(Color(UIColor.lightGray))
                 .frame(width: 1, height: 300)
+                .opacity(0.3)
                 .offset(y: -150)
             Rectangle()
                 .fill(Color(UIColor.lightGray))
                 .frame(width: 1, height: 100)
+                .opacity(0.3)
                 .offset(y: 50)
             }
             Group(){
                 Button(action: {
                     self.setPosition(position: "none")
                 }){
-                    Circle().frame(width:10, height: 10)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
                 }.offset(y: 0)
                 
                 Button(action: {
                     self.setPosition(position: "mild")
                 }){
-                    Circle().frame(width:10, height: 10)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
                 }.offset(y: -100)
                 
                 Button(action: {
                     self.setPosition(position: "moderate")
                 }){
-                    Circle().frame(width:10, height: 10)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
                 }.offset(y: -200)
                 
                 Button(action: {
                     self.setPosition(position: "severe")
                 }){
-                    Circle().frame(width:10, height: 10)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
                 }.offset(y: -300)
             }
-            Text("\(self.day)")
+            Text(ordinalNumber(num: self.day))
                 .frame(width: 50, height: 50)
                 .foregroundColor(Color.white)
+                .font(.custom("AvenirNext-Regular", size: 22))
                 .background(Circle().fill(self.buttonColor))
                 .padding(5)
                 .offset(x: 0, y: self.position.height + self.dragOffset.height)
