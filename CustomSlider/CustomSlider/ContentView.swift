@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View{
-        StorySliderGrid(days: Array(1...5))
+        StorySliderGrid(days: Array(1...7))
     }
 }
 
@@ -21,6 +21,14 @@ struct StorySliderGrid: View {
     var body: some View{
         ZStack(){
             Group(){
+                HStack(){
+                    Text("None").font(.system(size: 12)).padding(.leading, 5)
+                    Spacer()
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(width: 325, height: 0.5)
+                }
+                
                 HStack(){
                     Text("Mild").font(.system(size: 12)).padding(.leading, 5)
                     Spacer()
@@ -63,7 +71,7 @@ struct StorySliderGrid: View {
 
 struct StoryDaySlider: View {
     @Binding var values: [Int: String]
-    @State private var position = CGSize.zero
+    @State private var position = CGSize(width: 0, height: 100)
     @GestureState private var dragOffset = CGSize.zero
     @State private var buttonColor = Color.gray
     let day: Int
@@ -86,20 +94,30 @@ struct StoryDaySlider: View {
             self.position.height = -100
             self.buttonColor = Color.yellow
             self.updateSeverity(severity: "mild")
-        default:
+        case "none":
             self.position.height = 0
-            self.buttonColor = Color.gray
+            self.buttonColor = Color.green
             self.updateSeverity(severity: "none")
+        default:
+            self.position.height = 100
+            self.buttonColor = Color.gray
+            self.updateSeverity(severity: "null")
         }
         print("day: \(self.day), value: \(self.values[self.day]!)")
     }
     
     var body: some View {
         ZStack(){
+            Group(){
             Rectangle()
                 .fill(Color.gray)
                 .frame(width: 1, height: 300)
                 .offset(y: -150)
+            Rectangle()
+                .fill(Color(UIColor.lightGray))
+                .frame(width: 1, height: 100)
+                .offset(y: 50)
+            }
             Group(){
                 Button(action: {
                     self.setPosition(position: "none")
@@ -140,14 +158,16 @@ struct StoryDaySlider: View {
                         .onEnded({ (value) in
                             let currentHeight = self.position.height + value.translation.height
                             
-                            if(currentHeight < -50 && currentHeight >= -150){
+                            if(currentHeight < 50 && currentHeight >= -50){
+                                self.setPosition(position: "none")
+                            }else if(currentHeight < -50 && currentHeight >= -150){
                                 self.setPosition(position: "mild")
                             }else if(currentHeight < -150 && currentHeight >= -250){
                                 self.setPosition(position: "moderate")
                             }else if(currentHeight < -250 && currentHeight >= -350){
                                 self.setPosition(position: "severe")
                             }else{
-                                self.setPosition(position: "none")
+                                self.setPosition(position: "null")
                             }
                             
                         })
