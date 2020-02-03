@@ -25,6 +25,7 @@ struct ContentView: View {
 struct StorySliderGrid: View {
     let days: [Date]
     @State var values: [Date: String] = [:]
+    @State var comments: [Date: String] = [:]
     
     var body: some View{
         ZStack(){
@@ -76,7 +77,7 @@ struct StorySliderGrid: View {
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(){
                     ForEach(self.days, id: \.self){ day in
-                        StoryDaySlider(values: self.$values, day: day).padding(4)
+                        StoryDaySlider(values: self.$values, comments: self.$comments, day: day).padding(4)
                     }
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -89,13 +90,52 @@ struct StorySliderGrid: View {
     }
 }
 
+struct StoryDayModal: View {
+    @Binding var comment: String
+    @Binding var showModal: Bool
+    let day: Date
+    
+    func dateString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, MMMM d"
+        return formatter.string(from: date)
+    }
+    
+    var body: some View {
+        VStack(){
+            Text("What happened on \(dateString(date: self.day))?")
+                .font(.custom("AvenirNext-Regular", size: 28))
+                .padding(30)
+            TextFieldWithLine(placeholder: "Type here", text: $comment)
+                .padding(50)
+            Spacer()
+            Button(action: {
+                self.showModal.toggle()
+            }){
+            Image(systemName: "arrow.right")
+                .resizable()
+                .foregroundColor(.white)
+                .frame(width: 30, height: 30)
+                .padding()
+                .background(Color(red: 33/255, green: 61/255, blue: 153/255))
+                .cornerRadius(30)
+            }
+            Spacer()
+        }
+    }
+}
+
 
 struct StoryDaySlider: View {
     @Binding var values: [Date: String]
+    @Binding var comments: [Date: String]
+    @State var comment = ""
     @State private var position = CGSize(width: 0, height: 100)
     @GestureState private var dragOffset = CGSize.zero
+    @GestureState private var isLongPressed = false
     @State private var buttonColor = Color.gray
     let day: Date
+    @State private var showModal = false
     
     func updateSeverity(severity: String){
         self.values[self.day] = severity
@@ -208,10 +248,27 @@ struct StoryDaySlider: View {
                 .font(.custom("AvenirNext-Regular", size: 22))
                 .background(
                     Circle()
-                        .fill(self.buttonColor))
+                        .fill(self.buttonColor)
+                            .overlay(
+                              Circle()
+                                .stroke(Color.blue, lineWidth: self.comment.isEmpty ? 0 : 3)
+                                .opacity(0.8)
+                            ))
                 .padding(5)
                 .offset(x: 0, y: self.position.height + self.dragOffset.height)
+                .blur(radius: self.isLongPressed ? 2 : 0)
                 .animation(.easeOut)
+                .sheet(isPresented: $showModal){
+                    StoryDayModal(comment: self.$comment, showModal: self.$showModal, day: self.day)
+            }
+            .gesture(
+                LongPressGesture(minimumDuration: 0.5)
+                    .updating($isLongPressed){ value, state, transaction in
+                        state = value
+                    }
+                    .onEnded { _ in
+                        self.showModal.toggle()
+            })
                 .gesture(
                     DragGesture()
                         .updating(self.$dragOffset, body: { (value, state, transaction) in

@@ -13,6 +13,7 @@
 		77368CA623E252750022853E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77368CA523E252750022853E /* Assets.xcassets */; };
 		77368CA923E252750022853E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77368CA823E252750022853E /* Preview Assets.xcassets */; };
 		77368CAC23E252750022853E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77368CAA23E252750022853E /* LaunchScreen.storyboard */; };
+		7769226C23E7D35300F6F45D /* UIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7769226B23E7D35300F6F45D /* UIComponents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		77368CA823E252750022853E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77368CAB23E252750022853E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77368CAD23E252750022853E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7769226B23E7D35300F6F45D /* UIComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				77368C9F23E252720022853E /* AppDelegate.swift */,
 				77368CA123E252720022853E /* SceneDelegate.swift */,
+				7769226B23E7D35300F6F45D /* UIComponents.swift */,
 				77368CA323E252720022853E /* ContentView.swift */,
 				77368CA523E252750022853E /* Assets.xcassets */,
 				77368CAA23E252750022853E /* LaunchScreen.storyboard */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77368CA023E252720022853E /* AppDelegate.swift in Sources */,
+				7769226C23E7D35300F6F45D /* UIComponents.swift in Sources */,
 				77368CA223E252720022853E /* SceneDelegate.swift in Sources */,
 				77368CA423E252720022853E /* ContentView.swift in Sources */,
 			);
