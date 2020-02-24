@@ -52,6 +52,7 @@ struct StorySliderGrid: View {
                         .frame(width: 325, height: 0.5)
                 }.offset(y: -100)
                 
+                
                 HStack(){
                     Text("MODERATE")
                         .font(.custom("AvenirNext-Regular", size: 12))
@@ -62,6 +63,7 @@ struct StorySliderGrid: View {
                         .fill(Color.gray)
                         .frame(width: 325, height: 0.5)
                 }.offset(y: -200)
+                
                 
                 HStack(){
                     Text("SEVERE")
@@ -145,15 +147,23 @@ struct StoryDaySlider: View {
         switch position {
         case "severe":
             self.position.height = -300
-            self.buttonColor = Color(UIColor(red:1.00, green:0.47, blue:0.47, alpha:1.0))
+            self.buttonColor = Color(UIColor(red:0.92, green:0.23, blue:0.35, alpha:1.0))
             self.updateSeverity(severity: "severe")
+        case "moderate-severe":
+            self.position.height = -250
+            self.buttonColor = Color(UIColor(red:0.94, green:0.41, blue:0.30, alpha:1.0))
+            self.updateSeverity(severity: "moderate-severe")
         case "moderate":
             self.position.height = -200
-            self.buttonColor = Color(UIColor(red:1.00, green:0.75, blue:0.46, alpha:1.0))
+            self.buttonColor = Color(UIColor(red:0.96, green:0.53, blue:0.27, alpha:1.0))
             self.updateSeverity(severity: "moderate")
+        case "mild-moderate":
+            self.position.height = -150
+            self.buttonColor = Color(UIColor(red:0.98, green:0.71, blue:0.22, alpha:1.0))
+            self.updateSeverity(severity: "mild-moderate")
         case "mild":
             self.position.height = -100
-            self.buttonColor = Color(UIColor(red:0.96, green:0.90, blue:0.55, alpha:1.0))
+            self.buttonColor = Color(UIColor(red:1.00, green:0.83, blue:0.19, alpha:1.0))
             self.updateSeverity(severity: "mild")
         case "none":
             self.position.height = 0
@@ -221,25 +231,39 @@ struct StoryDaySlider: View {
                 Button(action: {
                     self.setPosition(position: "none")
                 }){
-                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
+                    Circle()
+                        .stroke(Color.black, lineWidth: 1)
+                        .frame(width:10, height: 10)
                 }.offset(y: 0)
                 
                 Button(action: {
                     self.setPosition(position: "mild")
                 }){
-                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
+                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -100)
+                
+                Button(action: {
+                    self.setPosition(position: "mild-moderate")
+                }){
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                }.offset(y: -150)
                 
                 Button(action: {
                     self.setPosition(position: "moderate")
                 }){
-                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
+                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -200)
+                
+                Button(action: {
+                    self.setPosition(position: "moderate-severe")
+                }){
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                }.offset(y: -250)
                 
                 Button(action: {
                     self.setPosition(position: "severe")
                 }){
-                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray))
+                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -300)
             }
             Text(String(getDayfromDate(date: self.day)))
@@ -279,11 +303,15 @@ struct StoryDaySlider: View {
                             
                             if(currentHeight < 50 && currentHeight >= -50){
                                 self.setPosition(position: "none")
-                            }else if(currentHeight < -50 && currentHeight >= -150){
+                            }else if(currentHeight < -50 && currentHeight >= -125){
                                 self.setPosition(position: "mild")
-                            }else if(currentHeight < -150 && currentHeight >= -250){
+                            }else if(currentHeight < -125 && currentHeight >= -175){
+                                self.setPosition(position: "mild-moderate")
+                            }else if(currentHeight < -175 && currentHeight >= -225){
                                 self.setPosition(position: "moderate")
-                            }else if(currentHeight < -250 && currentHeight >= -350){
+                            }else if(currentHeight < -225 && currentHeight >= -275){
+                                self.setPosition(position: "moderate-severe")
+                            }else if(currentHeight < -275 && currentHeight >= -400){
                                 self.setPosition(position: "severe")
                             }else{
                                 self.setPosition(position: "null")

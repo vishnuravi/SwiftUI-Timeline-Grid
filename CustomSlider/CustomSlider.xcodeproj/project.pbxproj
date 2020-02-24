@@ -290,6 +290,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CustomSlider/Preview Content\"";
+				DEVELOPMENT_TEAM = B2Q3T3P8HP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CustomSlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -309,6 +310,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CustomSlider/Preview Content\"";
+				DEVELOPMENT_TEAM = B2Q3T3P8HP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CustomSlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
