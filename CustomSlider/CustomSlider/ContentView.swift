@@ -212,20 +212,15 @@ struct StoryDaySlider: View {
                     .frame(width: 1, height: 300)
                     .opacity(0.3)
                     .offset(y: -150)
-                Rectangle()
-                    .fill(Color(UIColor.lightGray))
-                    .frame(width: 1, height: 100)
-                    .opacity(0.3)
-                    .offset(y: 50)
                 Text(getMonthfromDate(date: self.day))
                     .font(.custom("AvenirNext-Regular", size: 18))
                     .foregroundColor((Color(red: 33/255, green: 61/255, blue: 153/255)))
                     .opacity(0.5)
-                    .offset(y: 175)
+                    .offset(y: 75)
                 Text(getWeekdayfromDate(date: self.day))
                     .font(.custom("AvenirNext-Regular", size: 18))
                     .foregroundColor((Color(red: 33/255, green: 61/255, blue: 153/255)))
-                    .offset(y: 150)
+                    .offset(y: 50)
             }
             Group(){
                 Button(action: {
