@@ -166,11 +166,11 @@ struct StoryDaySlider: View {
             self.buttonColor = Color(UIColor(red:1.00, green:0.83, blue:0.19, alpha:1.0))
             self.updateSeverity(severity: "mild")
         case "none":
-            self.position.height = 0
+            self.position.height = -50
             self.buttonColor = Color(UIColor(red:0.73, green:0.86, blue:0.35, alpha:1.0))
             self.updateSeverity(severity: "none")
         default:
-            self.position.height = 100
+            self.position.height = 0
             self.buttonColor = Color.gray
             self.updateSeverity(severity: "null")
         }
@@ -302,9 +302,9 @@ struct StoryDaySlider: View {
                         .onEnded({ (value) in
                             let currentHeight = self.position.height + value.translation.height
                             
-                            if(currentHeight < 50 && currentHeight >= -50){
+                            if(currentHeight < -25 && currentHeight >= -75){
                                 self.setPosition(position: "none")
-                            }else if(currentHeight < -50 && currentHeight >= -125){
+                            }else if(currentHeight < -75 && currentHeight >= -125){
                                 self.setPosition(position: "mild")
                             }else if(currentHeight < -125 && currentHeight >= -175){
                                 self.setPosition(position: "mild-moderate")
