@@ -29,7 +29,7 @@ struct StorySliderGrid: View {
     
     var body: some View{
         ZStack(){
-            Group(){
+           Group(){
                 HStack(){
                     Text("NONE")
                         .font(.custom("AvenirNext-Regular", size: 12))
@@ -39,7 +39,7 @@ struct StorySliderGrid: View {
                     Rectangle()
                         .fill(Color.gray)
                         .frame(width: 325, height: 0.5)
-                }
+                }.offset(y: -50)
                 
                 HStack(){
                     Text("MILD")
@@ -132,7 +132,7 @@ struct StoryDaySlider: View {
     @Binding var values: [Date: String]
     @Binding var comments: [Date: String]
     @State var comment = ""
-    @State private var position = CGSize(width: 0, height: 100)
+    @State private var position = CGSize(width: 0, height: 0)
     @GestureState private var dragOffset = CGSize.zero
     @GestureState private var isLongPressed = false
     @State private var buttonColor = Color.gray
@@ -166,11 +166,11 @@ struct StoryDaySlider: View {
             self.buttonColor = Color(UIColor(red:1.00, green:0.83, blue:0.19, alpha:1.0))
             self.updateSeverity(severity: "mild")
         case "none":
-            self.position.height = 0
+            self.position.height = -50
             self.buttonColor = Color(UIColor(red:0.73, green:0.86, blue:0.35, alpha:1.0))
             self.updateSeverity(severity: "none")
         default:
-            self.position.height = 100
+            self.position.height = 0
             self.buttonColor = Color.gray
             self.updateSeverity(severity: "null")
         }
@@ -232,14 +232,15 @@ struct StoryDaySlider: View {
                     self.setPosition(position: "none")
                 }){
                     Circle()
-                        .stroke(Color.black, lineWidth: 1)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .opacity(0.75)
                         .frame(width:10, height: 10)
-                }.offset(y: 0)
+                }.offset(y: -50)
                 
                 Button(action: {
                     self.setPosition(position: "mild")
                 }){
-                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -100)
                 
                 Button(action: {
@@ -251,7 +252,7 @@ struct StoryDaySlider: View {
                 Button(action: {
                     self.setPosition(position: "moderate")
                 }){
-                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -200)
                 
                 Button(action: {
@@ -263,7 +264,7 @@ struct StoryDaySlider: View {
                 Button(action: {
                     self.setPosition(position: "severe")
                 }){
-                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -300)
             }
             Text(String(getDayfromDate(date: self.day)))
@@ -286,7 +287,7 @@ struct StoryDaySlider: View {
                     StoryDayModal(comment: self.$comment, showModal: self.$showModal, day: self.day)
             }
             .gesture(
-                LongPressGesture(minimumDuration: 0.5)
+                LongPressGesture(minimumDuration: 1.0)
                     .updating($isLongPressed){ value, state, transaction in
                         state = value
                     }
@@ -301,9 +302,9 @@ struct StoryDaySlider: View {
                         .onEnded({ (value) in
                             let currentHeight = self.position.height + value.translation.height
                             
-                            if(currentHeight < 50 && currentHeight >= -50){
+                            if(currentHeight < -25 && currentHeight >= -75){
                                 self.setPosition(position: "none")
-                            }else if(currentHeight < -50 && currentHeight >= -125){
+                            }else if(currentHeight < -75 && currentHeight >= -125){
                                 self.setPosition(position: "mild")
                             }else if(currentHeight < -125 && currentHeight >= -175){
                                 self.setPosition(position: "mild-moderate")
