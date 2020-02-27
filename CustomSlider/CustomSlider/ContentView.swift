@@ -29,7 +29,7 @@ struct StorySliderGrid: View {
     
     var body: some View{
         ZStack(){
-            Group(){
+           Group(){
                 HStack(){
                     Text("NONE")
                         .font(.custom("AvenirNext-Regular", size: 12))
@@ -39,7 +39,7 @@ struct StorySliderGrid: View {
                     Rectangle()
                         .fill(Color.gray)
                         .frame(width: 325, height: 0.5)
-                }
+                }.offset(y: -50)
                 
                 HStack(){
                     Text("MILD")
@@ -132,7 +132,7 @@ struct StoryDaySlider: View {
     @Binding var values: [Date: String]
     @Binding var comments: [Date: String]
     @State var comment = ""
-    @State private var position = CGSize(width: 0, height: 100)
+    @State private var position = CGSize(width: 0, height: 0)
     @GestureState private var dragOffset = CGSize.zero
     @GestureState private var isLongPressed = false
     @State private var buttonColor = Color.gray
@@ -232,14 +232,15 @@ struct StoryDaySlider: View {
                     self.setPosition(position: "none")
                 }){
                     Circle()
-                        .stroke(Color.black, lineWidth: 1)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .opacity(0.75)
                         .frame(width:10, height: 10)
-                }.offset(y: 0)
+                }.offset(y: -50)
                 
                 Button(action: {
                     self.setPosition(position: "mild")
                 }){
-                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -100)
                 
                 Button(action: {
@@ -251,7 +252,7 @@ struct StoryDaySlider: View {
                 Button(action: {
                     self.setPosition(position: "moderate")
                 }){
-                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -200)
                 
                 Button(action: {
@@ -263,7 +264,7 @@ struct StoryDaySlider: View {
                 Button(action: {
                     self.setPosition(position: "severe")
                 }){
-                    Circle().frame(width:15, height: 15).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
+                    Circle().frame(width:10, height: 10).foregroundColor(Color(UIColor.lightGray)).opacity(0.5)
                 }.offset(y: -300)
             }
             Text(String(getDayfromDate(date: self.day)))
@@ -286,7 +287,7 @@ struct StoryDaySlider: View {
                     StoryDayModal(comment: self.$comment, showModal: self.$showModal, day: self.day)
             }
             .gesture(
-                LongPressGesture(minimumDuration: 0.5)
+                LongPressGesture(minimumDuration: 1.0)
                     .updating($isLongPressed){ value, state, transaction in
                         state = value
                     }
